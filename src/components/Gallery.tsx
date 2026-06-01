@@ -44,11 +44,12 @@ export function Gallery() {
             Galería
           </p>
           <h2 className="font-display text-4xl font-light leading-tight tracking-tight text-ink md:text-6xl">
-            Plantas y espacios
+            Espacios para vivir
           </h2>
           <p className="mt-5 text-lg leading-relaxed text-stone">
-            Recorré la distribución del edificio. Próximamente sumaremos los
-            renders de exteriores, interiores y amenities.
+            Recorré los renders de la fachada, los interiores y los amenities del
+            proyecto. Las plantas de cada unidad están disponibles en la sección
+            Residencias.
           </p>
         </Reveal>
 

@@ -66,7 +66,7 @@ export const team = [
     name: "Zino / Probst Arquitectos — ZIP",
     description:
       "Estudio de arquitectura responsable del proyecto y la dirección de obra.",
-    logo: null,
+    logo: "/img/logo-zip.png",
   },
 ];
 
@@ -245,7 +245,7 @@ export const specs = [
   { label: "Régimen", value: project.promoLaw },
 ];
 
-/** Galería — renders reales del proyecto + plantas por nivel. */
+/** Galería — renders reales del proyecto (las plantas se ven en Residencias). */
 export const gallery = [
   { src: "/img/fachada.webp", alt: "Fachada del edificio Misión sobre la calle Rincón semipeatonal, Ciudad Vieja", caption: "Fachada · calle Rincón", big: true },
   { src: "/img/int-living.webp", alt: "Living luminoso de un departamento de Misión con terraza y vista al puerto", caption: "Living con vista al puerto" },
@@ -254,9 +254,6 @@ export const gallery = [
   { src: "/img/cowork.webp", alt: "Cowork de Misión con escritorios compartidos y vegetación", caption: "Cowork" },
   { src: "/img/gym.webp", alt: "Gimnasio equipado de Misión", caption: "Gimnasio" },
   { src: "/img/barbacoa.webp", alt: "Barbacoa común de Misión con parrillero y patio", caption: "Barbacoa" },
-  { src: "/planos/planta_baja.webp", alt: "Planta baja del edificio Misión con local comercial y unidades", caption: "Planta baja" },
-  { src: "/planos/nivel_7.webp", alt: "Planta del Nivel 7 con terrazas y parrilleros", caption: "Nivel 7 · terrazas" },
-  { src: "/planos/nivel_ss.webp", alt: "Planta de subsuelo con barbacoa, cowork y gimnasio", caption: "Subsuelo · amenities" },
 ];
 
 /** Renders destacados para la sección de amenities. */

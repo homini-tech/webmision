@@ -44,9 +44,6 @@ function UnitCard({ unit, onOpen }: { unit: Unit; onOpen: (u: Unit) => void }) {
           sizes="(max-width: 768px) 100vw, 33vw"
           className="object-cover transition-transform duration-700 group-hover:scale-105"
         />
-        <span className="absolute right-3 top-3 rounded-full bg-ink/85 px-3 py-1 text-[11px] font-medium uppercase tracking-wider text-bone">
-          {unit.type}
-        </span>
       </button>
 
       <div className="flex flex-1 flex-col p-6">

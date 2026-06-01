@@ -10,6 +10,17 @@ import { Icon } from "./icons";
 const filters = ["Todas", "Monoambiente", "1 Dormitorio"] as const;
 type Filter = (typeof filters)[number];
 
+/** Color del badge de orientación según su valor. */
+function orientationStyle(orientation: string): string {
+  const o = orientation.toLowerCase();
+  if (o.includes("contrafrente"))
+    return "bg-[#0f5544]/10 text-[#0f5544] ring-[#0f5544]/25";
+  if (o.includes("frente"))
+    return "bg-clay/15 text-[#8a6328] ring-clay/30";
+  // Pasante u otros
+  return "bg-ink/10 text-ink ring-ink/20";
+}
+
 function UnitCard({ unit, onOpen }: { unit: Unit; onOpen: (u: Unit) => void }) {
   return (
     <motion.article
@@ -45,7 +56,19 @@ function UnitCard({ unit, onOpen }: { unit: Unit; onOpen: (u: Unit) => void }) {
             {unit.level}
           </span>
         </div>
-        <p className="mt-1 text-sm text-stone">{unit.orientation}</p>
+        <div className="mt-3 flex flex-wrap items-center gap-2">
+          <span className="inline-flex items-center rounded-full bg-ink px-3 py-1 text-[11px] font-medium uppercase tracking-wider text-bone">
+            {unit.type}
+          </span>
+          <span
+            className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-wider ring-1 ${orientationStyle(
+              unit.orientation
+            )}`}
+          >
+            <Icon.pin className="h-3.5 w-3.5" />
+            {unit.orientation}
+          </span>
+        </div>
 
         <dl className="mt-5 grid grid-cols-3 gap-2 border-t border-ink/10 pt-4 text-center">
           <div>
@@ -211,9 +234,22 @@ export function Residences() {
               <div className="flex items-center justify-between border-b border-ink/10 px-6 py-4">
                 <div>
                   <h3 className="font-display text-xl text-ink">{modal.name}</h3>
-                  <p className="text-sm text-stone">
-                    {modal.type} · {modal.level} · {modal.total} m² totales
-                  </p>
+                  <div className="mt-2 flex flex-wrap items-center gap-2">
+                    <span className="inline-flex items-center rounded-full bg-ink px-3 py-1 text-[11px] font-medium uppercase tracking-wider text-bone">
+                      {modal.type}
+                    </span>
+                    <span
+                      className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-wider ring-1 ${orientationStyle(
+                        modal.orientation
+                      )}`}
+                    >
+                      <Icon.pin className="h-3.5 w-3.5" />
+                      {modal.orientation}
+                    </span>
+                    <span className="text-xs uppercase tracking-wider text-stone">
+                      {modal.level} · {modal.total} m² totales
+                    </span>
+                  </div>
                 </div>
                 <button
                   type="button"

@@ -21,7 +21,7 @@ export const project = {
   longDescription:
     "Pensamos Misión como una oportunidad de darle a la Ciudad Vieja un proyecto de reciclaje moderno, elegante, funcional y un estilo de vida pensado para la practicidad y la eficiencia. La Ciudad Vieja necesita recuperar su vocación residencial: es hora de que vuelva a ser un barrio vivido, no solo visitado, afirmándose como el centro cultural, turístico y patrimonial de Montevideo.",
   address: {
-    street: "Calle Rincón",
+    street: "Rincón 467",
     neighborhood: "Ciudad Vieja",
     city: "Montevideo",
     country: "Uruguay",
@@ -49,23 +49,24 @@ export const project = {
 export const team = [
   {
     role: "Desarrollo inmobiliario",
-    name: "Cipia",
+    name: "REM",
     description:
-      "Desarrolladora a cargo de la concepción y gestión integral del proyecto.",
-    note: PLACEHOLDER, // descripción institucional ampliada a confirmar
+      "Desarrolladora del proyecto, junto a Cipia.",
+    logo: "/img/logo-rem.png",
   },
   {
-    role: "Comercialización",
-    name: "REM",
-    description: "Equipo comercial responsable de la venta de las unidades.",
-    note: PLACEHOLDER,
+    role: "Desarrollo inmobiliario",
+    name: "Cipia",
+    description:
+      "Desarrolladora del proyecto, junto a REM.",
+    logo: "/img/logo-cipia.png",
   },
   {
     role: "Arquitectura",
     name: "Zino / Probst Arquitectos — ZIP",
     description:
       "Estudio de arquitectura responsable del proyecto y la dirección de obra.",
-    note: PLACEHOLDER,
+    logo: null,
   },
 ];
 
@@ -130,6 +131,23 @@ export const amenities = [
 ];
 
 export type UnitType = "Monoambiente" | "1 Dormitorio";
+
+/**
+ * Precio "Desde" por tipología (USD) — tomado del valor más bajo disponible
+ * en la Lista de Precios oficial (unidades no vendidas).
+ *  - Monoambiente: U002 (PB) USD 78.000
+ *  - 1 Dormitorio: U003 (PB) USD 111.000
+ * Actualizar si cambia la disponibilidad. // mantener sincronizado con la lista
+ */
+export const priceFrom: Record<UnitType, number> = {
+  Monoambiente: 78000,
+  "1 Dormitorio": 111000,
+};
+
+/** Formatea un precio en USD (es-UY): 78000 -> "USD 78.000". */
+export function formatUSD(value: number): string {
+  return "USD " + value.toLocaleString("es-UY");
+}
 
 export interface Unit {
   id: string;

@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
-import { units, type Unit } from "@/data/project";
+import { units, priceFrom, formatUSD, type Unit } from "@/data/project";
 import { Reveal } from "./Reveal";
 import { Icon } from "./icons";
 
@@ -65,10 +65,17 @@ function UnitCard({ unit, onOpen }: { unit: Unit; onOpen: (u: Unit) => void }) {
           metros cuadrados
         </p>
 
+        <div className="mt-4 flex items-baseline justify-center gap-2 rounded-xl bg-sand/40 py-2.5">
+          <span className="text-[11px] uppercase tracking-wider text-stone">Desde</span>
+          <span className="font-display text-2xl text-ink">
+            {formatUSD(priceFrom[unit.type])}
+          </span>
+        </div>
+
         <button
           type="button"
           onClick={() => onOpen(unit)}
-          className="mt-5 inline-flex items-center justify-center gap-2 rounded-full border border-ink/20 py-2.5 text-sm font-medium text-ink transition-colors hover:bg-ink hover:text-bone"
+          className="mt-4 inline-flex items-center justify-center gap-2 rounded-full border border-ink/20 py-2.5 text-sm font-medium text-ink transition-colors hover:bg-ink hover:text-bone"
         >
           Ver plano <Icon.arrow className="h-4 w-4" />
         </button>
@@ -216,10 +223,11 @@ export function Residences() {
                 </span>
               </div>
               <div className="flex flex-col gap-3 border-t border-ink/10 p-6 sm:flex-row sm:items-center sm:justify-between">
-                <dl className="flex gap-6 text-sm text-stone">
+                <dl className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-stone">
                   <div><dt className="text-xs uppercase">Construida</dt><dd className="font-medium text-ink">{modal.built} m²</dd></div>
                   <div><dt className="text-xs uppercase">Exterior</dt><dd className="font-medium text-ink">{modal.exterior} m²</dd></div>
                   <div><dt className="text-xs uppercase">Comunes</dt><dd className="font-medium text-ink">{modal.common} m²</dd></div>
+                  <div><dt className="text-xs uppercase">Desde</dt><dd className="font-medium text-clay">{formatUSD(priceFrom[modal.type])}</dd></div>
                 </dl>
                 <div className="flex flex-wrap gap-2">
                   <a

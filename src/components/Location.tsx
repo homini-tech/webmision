@@ -3,7 +3,7 @@ import { Icon, type IconName } from "./icons";
 import { Reveal } from "./Reveal";
 
 export function Location() {
-  const query = encodeURIComponent("Calle Rincón, Ciudad Vieja, Montevideo, Uruguay");
+  const query = encodeURIComponent("Rincón 467, Montevideo, Uruguay");
   // Google Maps embed sin API key (modo "place" público)
   const mapSrc = `https://www.google.com/maps?q=${query}&hl=es&z=16&output=embed`;
   const directions = `https://www.google.com/maps/search/?api=1&query=${query}`;

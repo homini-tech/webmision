@@ -35,8 +35,7 @@ export function Footer() {
 
         <div className="flex flex-col gap-2 border-t border-bone/10 pt-6 text-xs md:flex-row md:items-center md:justify-between">
           <p>
-            Desarrolla <span className="text-bone/90">Cipia</span> · Comercializa{" "}
-            <span className="text-bone/90">REM</span> · Arquitectura{" "}
+            Desarrolla <span className="text-bone/90">Cipia y REM</span> · Arquitectura{" "}
             <span className="text-bone/90">Zino/Probst (ZIP)</span>
           </p>
           <p>© {new Date().getFullYear()} {project.name}. Todos los derechos reservados.</p>

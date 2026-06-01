@@ -260,6 +260,15 @@ export function Residences() {
                   <Icon.close />
                 </button>
               </div>
+              <div className="flex items-start gap-2.5 border-b border-ink/10 bg-sand/40 px-6 py-3">
+                <Icon.info className="mt-0.5 h-4 w-4 shrink-0 text-clay" />
+                <p className="text-xs leading-relaxed text-stone">
+                  El plano corresponde a la <strong className="font-semibold text-ink">planta completa del nivel</strong>.
+                  Esta unidad es la <strong className="font-semibold text-ink">{modal.name.replace("Unidad ", "")}</strong>
+                  {" "}— <strong className="font-semibold text-ink">{modal.type}</strong>, {modal.orientation.toLowerCase()}.
+                  En la tabla del plano puede figurar agrupada con otras unidades del mismo nivel.
+                </p>
+              </div>
               <div
                 className={`relative max-h-[62vh] overflow-auto bg-bone ${
                   zoom ? "cursor-zoom-out" : "cursor-zoom-in"

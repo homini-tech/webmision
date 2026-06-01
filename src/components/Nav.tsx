@@ -9,6 +9,7 @@ const links = [
   { href: "#residencias", label: "Residencias" },
   { href: "#amenities", label: "Amenities" },
   { href: "#galeria", label: "Galería" },
+  { href: "#avance-obra", label: "Avance de obra" },
   { href: "#ubicacion", label: "Ubicación" },
   { href: "#descargas", label: "Descargas" },
   { href: "#equipo", label: "Equipo" },

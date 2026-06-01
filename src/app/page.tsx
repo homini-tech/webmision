@@ -5,6 +5,7 @@ import { Residences } from "@/components/Residences";
 import { Amenities } from "@/components/Amenities";
 import { Location } from "@/components/Location";
 import { Gallery } from "@/components/Gallery";
+import { ObraProgress } from "@/components/ObraProgress";
 import { Downloads } from "@/components/Downloads";
 import { Team } from "@/components/Team";
 import { Contact } from "@/components/Contact";
@@ -20,6 +21,7 @@ export default function Home() {
         <Residences />
         <Amenities />
         <Gallery />
+        <ObraProgress />
         <Location />
         <Downloads />
         <Team />

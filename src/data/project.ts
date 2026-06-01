@@ -132,18 +132,6 @@ export const amenities = [
 
 export type UnitType = "Monoambiente" | "1 Dormitorio";
 
-/**
- * Precio "Desde" por tipología (USD) — tomado del valor más bajo disponible
- * en la Lista de Precios oficial (unidades no vendidas).
- *  - Monoambiente: U002 (PB) USD 78.000
- *  - 1 Dormitorio: U003 (PB) USD 111.000
- * Actualizar si cambia la disponibilidad. // mantener sincronizado con la lista
- */
-export const priceFrom: Record<UnitType, number> = {
-  Monoambiente: 78000,
-  "1 Dormitorio": 111000,
-};
-
 /** Formatea un precio en USD (es-UY): 78000 -> "USD 78.000". */
 export function formatUSD(value: number): string {
   return "USD " + value.toLocaleString("es-UY");
@@ -155,38 +143,65 @@ export interface Unit {
   level: string;
   type: UnitType;
   orientation: string;
-  built: number; // m² área construida
+  built: number; // m² área construida (mensura + cuota muros/ductos)
   exterior: number; // m² área exterior de uso exclusivo
   common: number; // m² cuota parte comunes
-  total: number; // m² área total (APPCU)
+  total: number; // m² área total
+  priceFrom: number | null; // precio "desde" en USD (menor piso disponible). null = consultar / vendida
   plan: string; // imagen de planta (preview)
   planHd: string; // imagen de planta alta resolución (zoom/descarga)
 }
 
 /**
- * Tipologías y metrajes — EXTRAÍDOS de los planos por unidad.
- * (Áreas en m², tal como figuran en la documentación preliminar.)
+ * Tipologías, metrajes y precios — según la Lista de Precios oficial
+ * "MISIÓN - Ciudad Vieja". Áreas en m².
+ *  - built  = Área construida (mensura + cuota parte de muros + ductos)
+ *  - exterior = terraza o patio de uso exclusivo
+ *  - common = cuota parte de áreas comunes del piso
+ *  - total  = m² totales
+ *  - priceFrom = menor precio DISPONIBLE (no "Vendida") entre los pisos.
+ * Las unidades 01, 02, 04, 05, 03 y 06 son tipologías que se repiten en los
+ * pisos 1 a 6; se muestra el menor precio disponible de la fila.
  */
 export const units: Unit[] = [
+  // Tipologías repetidas en pisos 2–6 (Monoambientes)
+  { id: "u01", name: "Unidad 01", level: "Pisos 2–6", type: "Monoambiente", orientation: "Contrafrente", built: 40.0, exterior: 3.0, common: 8.6, total: 51.6, priceFrom: 83000, plan: "/planos/nivel_2_al_6.webp", planHd: "/planos-hd/nivel_2_al_6.webp" },
+  { id: "u02", name: "Unidad 02", level: "Pisos 2–6", type: "Monoambiente", orientation: "Contrafrente", built: 39.0, exterior: 4.2, common: 8.4, total: 51.6, priceFrom: 83000, plan: "/planos/nivel_2_al_6.webp", planHd: "/planos-hd/nivel_2_al_6.webp" },
+  { id: "u04", name: "Unidad 04", level: "Pisos 2–6", type: "Monoambiente", orientation: "Frente", built: 39.3, exterior: 4.3, common: 8.4, total: 52.0, priceFrom: 93000, plan: "/planos/nivel_2_al_6.webp", planHd: "/planos-hd/nivel_2_al_6.webp" },
+  { id: "u05", name: "Unidad 05", level: "Pisos 2–6", type: "Monoambiente", orientation: "Frente", built: 39.4, exterior: 4.5, common: 8.4, total: 52.3, priceFrom: 99000, plan: "/planos/nivel_2_al_6.webp", planHd: "/planos-hd/nivel_2_al_6.webp" },
+
+  // Tipologías repetidas en pisos 2–6 (1 dormitorio)
+  { id: "u03", name: "Unidad 03", level: "Pisos 2–6", type: "1 Dormitorio", orientation: "Contrafrente", built: 48.8, exterior: 8.7, common: 10.3, total: 67.8, priceFrom: 117000, plan: "/planos/nivel_2_al_6.webp", planHd: "/planos-hd/nivel_2_al_6.webp" },
+  { id: "u06", name: "Unidad 06", level: "Pisos 2–6", type: "1 Dormitorio", orientation: "Frente", built: 49.6, exterior: 8.4, common: 10.6, total: 68.6, priceFrom: 129000, plan: "/planos/nivel_2_al_6.webp", planHd: "/planos-hd/nivel_2_al_6.webp" },
+
   // Planta baja
-  { id: "u01", name: "Unidad 01", level: "Planta baja", type: "Monoambiente", orientation: "Contrafrente", built: 39.71, exterior: 2.9, common: 8.5, total: 51.11, plan: "/planos/planta_baja.webp", planHd: "/planos-hd/planta_baja.webp" },
-  { id: "u02", name: "Unidad 02", level: "Planta baja", type: "Monoambiente", orientation: "Contrafrente", built: 38.3, exterior: 2.9, common: 8.2, total: 49.4, plan: "/planos/planta_baja.webp", planHd: "/planos-hd/planta_baja.webp" },
-  { id: "u03", name: "Unidad 03", level: "Planta baja", type: "1 Dormitorio", orientation: "Contrafrente", built: 50.0, exterior: 2.9, common: 8.5, total: 61.4, plan: "/planos/planta_baja.webp", planHd: "/planos-hd/planta_baja.webp" },
+  { id: "u002", name: "Unidad 002", level: "Planta baja", type: "Monoambiente", orientation: "Contrafrente", built: 38.2, exterior: 2.9, common: 8.2, total: 49.3, priceFrom: 78000, plan: "/planos/planta_baja.webp", planHd: "/planos-hd/planta_baja.webp" },
+  { id: "u003", name: "Unidad 003", level: "Planta baja", type: "1 Dormitorio", orientation: "Contrafrente", built: 50.0, exterior: 5.9, common: 10.7, total: 66.6, priceFrom: 111000, plan: "/planos/planta_baja.webp", planHd: "/planos-hd/planta_baja.webp" },
 
-  // Nivel 1
-  { id: "u104", name: "Unidad 104", level: "Nivel 1", type: "Monoambiente", orientation: "Frente", built: 39.23, exterior: 14.5, common: 8.4, total: 62.13, plan: "/planos/nivel_1.webp", planHd: "/planos-hd/nivel_1.webp" },
-  { id: "u105", name: "Unidad 105", level: "Nivel 1", type: "Monoambiente", orientation: "Frente", built: 39.37, exterior: 15.0, common: 8.4, total: 62.77, plan: "/planos/nivel_1.webp", planHd: "/planos-hd/nivel_1.webp" },
+  // Piso 1 (con grandes terrazas al frente)
+  { id: "u104", name: "Unidad 104", level: "Piso 1", type: "Monoambiente", orientation: "Frente", built: 39.3, exterior: 14.5, common: 8.4, total: 62.2, priceFrom: 99000, plan: "/planos/nivel_1.webp", planHd: "/planos-hd/nivel_1.webp" },
+  { id: "u106", name: "Unidad 106", level: "Piso 1", type: "1 Dormitorio", orientation: "Frente", built: 49.6, exterior: 26.6, common: 10.6, total: 86.8, priceFrom: 138000, plan: "/planos/nivel_1.webp", planHd: "/planos-hd/nivel_1.webp" },
 
-  // Niveles 2 a 6 (planta tipo)
-  { id: "uX01", name: "Unidades 201–601", level: "Niveles 2–6", type: "Monoambiente", orientation: "Contrafrente", built: 39.9, exterior: 3.0, common: 8.6, total: 51.5, plan: "/planos/nivel_2_al_6.webp", planHd: "/planos-hd/nivel_2_al_6.webp" },
-  { id: "uX02", name: "Unidades 202–602", level: "Niveles 2–6", type: "Monoambiente", orientation: "Contrafrente", built: 39.06, exterior: 4.2, common: 8.4, total: 51.66, plan: "/planos/nivel_2_al_6.webp", planHd: "/planos-hd/nivel_2_al_6.webp" },
-  { id: "uX03", name: "Unidades 203–603", level: "Niveles 2–6", type: "1 Dormitorio", orientation: "Contrafrente", built: 50.0, exterior: 4.0, common: 8.5, total: 62.5, plan: "/planos/nivel_2_al_6.webp", planHd: "/planos-hd/nivel_2_al_6.webp" }, // exterior/total estimados // PLACEHOLDER
-
-  // Nivel 7 (penthouses con gran expansión)
-  { id: "u701", name: "Unidad 701", level: "Nivel 7", type: "Monoambiente", orientation: "Contrafrente", built: 28.24, exterior: 52.76, common: 6.0, total: 87.0, plan: "/planos/nivel_7.webp", planHd: "/planos-hd/nivel_7.webp" },
-  { id: "u702", name: "Unidad 702", level: "Nivel 7", type: "1 Dormitorio", orientation: "Pasante", built: 49.98, exterior: 79.62, common: 10.7, total: 140.3, plan: "/planos/nivel_7.webp", planHd: "/planos-hd/nivel_7.webp" },
-  { id: "u703", name: "Unidad 703", level: "Nivel 7", type: "1 Dormitorio", orientation: "Pasante", built: 49.98, exterior: 60.0, common: 10.0, total: 120.0, plan: "/planos/nivel_7.webp", planHd: "/planos-hd/nivel_7.webp" }, // áreas estimadas // PLACEHOLDER
+  // Piso 7 (penthouses)
+  { id: "u701", name: "Unidad 701", level: "Piso 7", type: "Monoambiente", orientation: "Contrafrente", built: 28.2, exterior: 52.8, common: 6.0, total: 87.0, priceFrom: 122000, plan: "/planos/nivel_7.webp", planHd: "/planos-hd/nivel_7.webp" },
+  { id: "u703", name: "Unidad 703", level: "Piso 7", type: "1 Dormitorio", orientation: "Frente", built: 38.3, exterior: 24.3, common: 8.3, total: 70.9, priceFrom: 138000, plan: "/planos/nivel_7.webp", planHd: "/planos-hd/nivel_7.webp" },
 ];
+
+/** Local comercial (planta baja) — listado aparte. */
+export const localComercial = {
+  name: "Local comercial 001",
+  level: "Planta baja",
+  orientation: "Frente",
+  built: 121.9,
+  total: 121.9,
+  priceFrom: 199000,
+};
+
+/** Condiciones de financiación — de la lista de precios oficial. */
+export const financing = {
+  terms: ["40% al firmar la promesa", "50% en 4 cuotas trimestrales", "10% a la ocupación"],
+  note: "Gastos de ocupación: 3%. Precios en dólares (USD), sujetos a disponibilidad. Información sujeta a cambios.",
+};
 
 /** Diferenciales del proyecto (concepto / venta emocional). */
 export const highlights = [
@@ -292,3 +307,32 @@ export const exoneraciones = [
 export const whatsappUrl = `https://wa.me/${project.whatsapp.number}?text=${encodeURIComponent(
   project.whatsapp.defaultMessage
 )}`;
+
+/** Avance de obra — registro fotográfico del estado actual de la construcción. */
+export const obra = [
+  {
+    src: "/img/obra-5.webp",
+    caption: "Fachada del Edificio Rincón en obra",
+    detail: "El histórico Edificio Rincón, sobre Rincón 467, en proceso de reciclaje.",
+  },
+  {
+    src: "/img/obra-2.webp",
+    caption: "Interior en demolición y preparación",
+    detail: "Retiro de terminaciones y preparación de las plantas para el nuevo proyecto.",
+  },
+  {
+    src: "/img/obra-4.webp",
+    caption: "Tabiquería y nuevas divisiones",
+    detail: "Montaje de estructura de tabiques y trazado de las nuevas unidades.",
+  },
+  {
+    src: "/img/obra-3.webp",
+    caption: "Instalaciones y cielorrasos",
+    detail: "Avance de instalaciones sanitarias y eléctricas con estructura de cielorrasos.",
+  },
+  {
+    src: "/img/obra-1.webp",
+    caption: "Trabajos en altura con vista al puerto",
+    detail: "Izaje de materiales y hormigonado, con las vistas que tendrán las unidades.",
+  },
+];

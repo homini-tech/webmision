@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
-import { units, priceFrom, formatUSD, type Unit } from "@/data/project";
+import { units, formatUSD, financing, type Unit } from "@/data/project";
 import { Reveal } from "./Reveal";
 import { Icon } from "./icons";
 
@@ -66,10 +66,16 @@ function UnitCard({ unit, onOpen }: { unit: Unit; onOpen: (u: Unit) => void }) {
         </p>
 
         <div className="mt-4 flex items-baseline justify-center gap-2 rounded-xl bg-sand/40 py-2.5">
-          <span className="text-[11px] uppercase tracking-wider text-stone">Desde</span>
-          <span className="font-display text-2xl text-ink">
-            {formatUSD(priceFrom[unit.type])}
-          </span>
+          {unit.priceFrom ? (
+            <>
+              <span className="text-[11px] uppercase tracking-wider text-stone">Desde</span>
+              <span className="font-display text-2xl text-ink">
+                {formatUSD(unit.priceFrom)}
+              </span>
+            </>
+          ) : (
+            <span className="text-sm font-medium text-stone">Consultar disponibilidad</span>
+          )}
         </div>
 
         <button
@@ -161,10 +167,23 @@ export function Residences() {
           </AnimatePresence>
         </motion.div>
 
-        <p className="mt-8 text-xs leading-relaxed text-stone/70">
-          Información preliminar sujeta a ajustes del Proyecto Definitivo. Las
-          medidas definitivas surgirán del plano del Ing. Agrimensor. Imágenes y
-          equipamiento de carácter ilustrativo.
+        <div className="mt-10 flex flex-col gap-4 rounded-2xl border border-ink/10 bg-sand/30 p-6 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h3 className="font-display text-xl text-ink">Financiación</h3>
+            <p className="mt-1 text-sm text-stone">{financing.terms.join(" · ")}</p>
+          </div>
+          <a
+            href="#contacto"
+            className="inline-flex items-center justify-center gap-2 rounded-full bg-ink px-6 py-3 text-sm font-medium text-bone transition-colors hover:bg-deep"
+          >
+            Consultar precios y disponibilidad <Icon.arrow className="h-4 w-4" />
+          </a>
+        </div>
+
+        <p className="mt-6 text-xs leading-relaxed text-stone/70">
+          {financing.note} Información preliminar sujeta a ajustes del Proyecto
+          Definitivo. Las medidas definitivas surgirán del plano del Ing.
+          Agrimensor. Imágenes y equipamiento de carácter ilustrativo.
         </p>
       </div>
 
@@ -227,7 +246,7 @@ export function Residences() {
                   <div><dt className="text-xs uppercase">Construida</dt><dd className="font-medium text-ink">{modal.built} m²</dd></div>
                   <div><dt className="text-xs uppercase">Exterior</dt><dd className="font-medium text-ink">{modal.exterior} m²</dd></div>
                   <div><dt className="text-xs uppercase">Comunes</dt><dd className="font-medium text-ink">{modal.common} m²</dd></div>
-                  <div><dt className="text-xs uppercase">Desde</dt><dd className="font-medium text-clay">{formatUSD(priceFrom[modal.type])}</dd></div>
+                  <div><dt className="text-xs uppercase">Desde</dt><dd className="font-medium text-clay">{modal.priceFrom ? formatUSD(modal.priceFrom) : "Consultar"}</dd></div>
                 </dl>
                 <div className="flex flex-wrap gap-2">
                   <a

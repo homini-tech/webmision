@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { project } from "@/data/project";
+import { project, whatsappUrl } from "@/data/project";
 import { Icon } from "./icons";
 import { Reveal } from "./Reveal";
 
@@ -64,7 +64,7 @@ export function Contact() {
           <ul className="mt-8 flex flex-col gap-4 text-bone/80">
             <li>
               <a
-                href={`https://wa.me/${project.whatsapp.number}`}
+                href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-3 hover:text-bone"

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { project } from "@/data/project";
+import { project, whatsappUrl } from "@/data/project";
 import { Icon } from "./icons";
 
 export function Footer() {
@@ -69,7 +69,7 @@ export function FloatingCTA() {
     <>
       {/* WhatsApp flotante */}
       <a
-        href={`https://wa.me/${project.whatsapp.number}`}
+        href={whatsappUrl}
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Contactar por WhatsApp"

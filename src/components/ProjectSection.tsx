@@ -84,12 +84,12 @@ export function ProjectSection() {
           </dl>
         </Reveal>
 
-        <div className="mt-16 grid gap-10 lg:grid-cols-2">
+        <div className="mt-16">
           <Reveal as="div">
             <h3 className="mb-5 font-display text-2xl text-ink">
               Terminaciones de calidad
             </h3>
-            <ul className="flex flex-col gap-3">
+            <ul className="grid gap-3 sm:grid-cols-2">
               {terminaciones.map((t) => (
                 <li key={t} className="flex gap-3 text-[15px] leading-relaxed text-stone">
                   <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-clay" />
@@ -98,28 +98,51 @@ export function ProjectSection() {
               ))}
             </ul>
           </Reveal>
+        </div>
 
-          <Reveal as="div">
-            <h3 className="mb-5 font-display text-2xl text-ink">
-              Exoneraciones fiscales
-            </h3>
-            <p className="mb-4 text-sm text-stone">
-              Proyecto amparado en la Ley de Vivienda Promovida:
-            </p>
-            <ul className="flex flex-col gap-3">
-              {exoneraciones.map((e) => (
-                <li key={e} className="flex gap-3 text-[15px] leading-relaxed text-stone">
-                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-clay" />
-                  {e}
-                </li>
-              ))}
-            </ul>
-            <p className="mt-5 rounded-xl bg-sand/50 px-4 py-3 text-sm text-ink">
+        {/* Exoneraciones fiscales — bloque destacado */}
+        <Reveal as="div" className="mt-14">
+          <div className="grain relative overflow-hidden rounded-3xl bg-deep p-8 text-bone md:p-12">
+            <div
+              aria-hidden
+              className="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-[#2f7d68]/25 blur-[110px]"
+            />
+            <div className="relative grid gap-10 lg:grid-cols-[1fr_1.2fr] lg:items-center">
+              <div>
+                <p className="mb-4 flex items-center gap-3 text-xs uppercase tracking-widest2 text-[#7bbfa9]">
+                  <span className="h-px w-10 bg-[#7bbfa9]" />
+                  Beneficio fiscal
+                </p>
+                <h3 className="font-display text-3xl font-light leading-tight md:text-5xl">
+                  Exoneraciones de la Ley de Vivienda Promovida
+                </h3>
+                <p className="mt-5 max-w-prose2 text-bone/70">
+                  Una oportunidad de inversión con importantes beneficios
+                  impositivos durante 10 años.
+                </p>
+              </div>
+
+              <ul className="grid gap-3 sm:grid-cols-2">
+                {exoneraciones.map((e) => (
+                  <li
+                    key={e}
+                    className="flex items-start gap-3 rounded-2xl border border-bone/10 bg-bone/[0.04] p-5"
+                  >
+                    <span className="mt-0.5 inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#2f7d68] text-bone">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4"><path d="M5 12l4 4L19 7" /></svg>
+                    </span>
+                    <span className="text-[15px] leading-snug text-bone/90">{e}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <p className="relative mt-10 border-t border-bone/10 pt-6 font-display text-xl italic text-bone/85 md:text-2xl">
               REM y Cipia se unen para darle a Ciudad Vieja un proyecto del nivel
               que su futuro merece.
             </p>
-          </Reveal>
-        </div>
+          </div>
+        </Reveal>
       </div>
     </section>
   );

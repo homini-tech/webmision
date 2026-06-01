@@ -19,8 +19,8 @@ export default function Home() {
         <ProjectSection />
         <Residences />
         <Amenities />
-        <Location />
         <Gallery />
+        <Location />
         <Downloads />
         <Team />
         <Contact />

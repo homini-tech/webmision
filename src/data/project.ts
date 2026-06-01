@@ -34,9 +34,9 @@ export const project = {
   deliveryDate: PLACEHOLDER, // fecha de entrega no especificada en la documentación
   promoLaw: "Ley de Vivienda Promovida", // confirmado en brochure (exoneraciones IRPF/IP/ITP + Contribución Inmobiliaria 10 años)
   whatsapp: {
-    // PLACEHOLDER — reemplazar por el número comercial real (formato internacional sin signos)
-    number: "59800000000",
+    number: "59898289056",
     displayLabel: "Escribinos por WhatsApp",
+    defaultMessage: "Tengo una consulta del proyecto Misión",
   },
   contact: {
     email: "ventas@misionciudadvieja.uy", // PLACEHOLDER
@@ -269,3 +269,8 @@ export const exoneraciones = [
   "Impuesto a las Transmisiones Patrimoniales (ITP).",
   "Exoneración de Contribución Inmobiliaria por 10 años.",
 ];
+
+/** URL de WhatsApp con mensaje precargado. */
+export const whatsappUrl = `https://wa.me/${project.whatsapp.number}?text=${encodeURIComponent(
+  project.whatsapp.defaultMessage
+)}`;
